@@ -7,7 +7,9 @@
 
 # Как запустить проект:
 Клонировать репозиторий и перейти в него в командной строке:  
-`https://github.com/cskovec22/api_final_yatube`
+```
+https://github.com/cskovec22/api_final_yatube
+```
 
 
 api final
