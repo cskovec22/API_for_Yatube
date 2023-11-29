@@ -1,16 +1,13 @@
 from django.shortcuts import get_object_or_404
+from rest_framework import filters, mixins, viewsets
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import filters, mixins, viewsets, generics
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 
-from posts.models import Follow, Group, Post, User
-from api.serializers import (
-    CommentSerializer,
-    FollowSerializer,
-    GroupSerializer,
-    PostSerializer
-)
-from api.permissions import AuthorOrReadOnly
+from api.permissions import IsAuthorOrReadOnly
+from api.serializers import (CommentSerializer, FollowSerializer,
+                             GroupSerializer, PostSerializer)
+from posts.models import Group, Post, User
 
 
 class CreateListViewSet(mixins.CreateModelMixin,
@@ -23,7 +20,10 @@ class CreateListViewSet(mixins.CreateModelMixin,
 
 class CommentViewSet(viewsets.ModelViewSet):
     """Вьюсет для комментария."""
-    permission_classes = (AuthorOrReadOnly, IsAuthenticated,)
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAuthorOrReadOnly,
+    )
     serializer_class = CommentSerializer
 
     def get_post(self):
@@ -63,34 +63,6 @@ class FollowViewSet(CreateListViewSet):
         serializer.save(user=self.request.user)
 
 
-# class FollowList(generics.ListCreateAPIView):
-#     """Вьюсет для подписки."""
-#     # filter_backends = (filters.SearchFilter,)
-#     # permission_classes = [IsAuthenticated]
-#     # search_fields = ('following',)
-#     queryset = User.objects.all()
-#     serializer_class = FollowSerializer
-
-#     # def get_queryset(self):
-#     #     """
-#     #     Возвращает queryset c подписками для конкретного пользователя.
-#     #     """
-#     #     user_follower = get_object_or_404(
-#     #         User,
-#     #         username=self.request.user.username
-#     #     )
-#     #     return user_follower.following
-
-#     def perform_create(self, serializer):
-#         """"
-#         Подписывает пользователя, сделавшего запрос,
-#         на пользователя, переданного в теле запроса.
-#         """
-#         serializer.save(
-#             user=self.request.user
-#         )
-
-
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для сообщества."""
     queryset = Group.objects.all()
@@ -100,7 +72,10 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     """Вьюсет для поста."""
     pagination_class = LimitOffsetPagination
-    permission_classes = (AuthorOrReadOnly, IsAuthenticated,)
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAuthorOrReadOnly,
+    )
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
