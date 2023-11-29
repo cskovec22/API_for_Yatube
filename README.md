@@ -10,6 +10,29 @@
 ```
 https://github.com/cskovec22/api_final_yatube
 ```
+```
+cd api_final_yatube
+```
+Cоздать и активировать виртуальное окружение:
+```
+py -m venv venv
+```
+```
+. venv/Scripts/activate
+```
+Установить зависимости из файла requirements.txt:
+```
+py -m pip install --upgrade pip
+```
+```
+pip install -r requirements.txt
+```
+Выполнить миграции:
+```
+py manage.py migrate
+```
+Запустить проект:
+```
+py manage.py runserver
+```
 
-
-api final
