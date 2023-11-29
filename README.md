@@ -43,7 +43,18 @@ GET /api/v1/posts/
 ```
 При указании параметров _limit_ (количество публикаций на страницу) и _offset_ (номер страницы, после которой начинать выдачу) выдача работает с пагинацией.  
 ```
-GET /api/v1/posts/?limit=10&offset=5
+GET /api/v1/posts/?limit=4&offset=2
+```
+Пример удачного выполнения запроса:
+```
+{
+  "count": 13,
+  "next": "http://api.example.org/accounts/?offset=9&limit=4",
+  "previous": .../?offset=5&limit=4",
+  "results": [
+    {}
+  ]
+}
 ```
 #### Создание публикации  
 Анонимные запросы запрещены.
@@ -198,7 +209,7 @@ GET /api/v1/groups/
     "title": "string",
     "slug": "string",
     "description": "string"
-}
+  }
 ]
 ```
 #### Информация о сообществе
