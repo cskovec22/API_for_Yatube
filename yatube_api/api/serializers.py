@@ -34,7 +34,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class FollowSerializer(serializers.ModelSerializer):
     """Сериализатор для подписки."""
     user = serializers.SlugRelatedField(
-        queryset=User.objects.all(),
+        read_only=True,
         slug_field='username',
         default=serializers.CurrentUserDefault(),
     )
@@ -54,7 +54,8 @@ class FollowSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        if data['user'] == data['following']:
+        user = self.context.get('request').user
+        if user == data['following']:
             raise serializers.ValidationError(
                 'Ошибка! Подписка самого на себя.'
             )
