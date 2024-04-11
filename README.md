@@ -17,8 +17,8 @@
 - Клонируйте репозиторий и перейдите в него в командной строке:
 
 ```
-https://github.com/cskovec22/API_Yatube.git  
-cd API_Yatube
+https://github.com/cskovec22/API_for_Yatube.git  
+cd API_for_Yatube
 ```
 
 - Установите и активируйте виртуальное окружение:
